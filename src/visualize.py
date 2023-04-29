@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+import matplotlib
+matplotlib.use('Agg') # Add this line
+
 # command line args
 import argparse
 parser = argparse.ArgumentParser()
@@ -8,10 +11,10 @@ parser.add_argument('--key',required=True)
 parser.add_argument('--percent',action='store_true')
 args = parser.parse_args()
 
-# imports
 import os
 import json
 from collections import Counter,defaultdict
+import matplotlib.pyplot as plt # Make sure to import plt after setting the backend
 
 # open the input path
 with open(args.input_path) as f:
@@ -26,3 +29,27 @@ if args.percent:
 items = sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), reverse=True)
 for k,v in items:
     print(k,':',v)
+
+# create lists of keys and values for the bar graph
+top_items = items[:10] 
+keys = [item[0] for item in top_items]
+values = [item[1] for item in top_items]
+keys = keys[::-1]
+values = values[::-1]
+
+# plot the bar graph
+plt.barh(keys, values, color='blue')
+
+# set the title and axis labels
+if args.input_path[-1] == 'g':
+    plt.xlabel('Language')
+else:
+    plt.xlabel('Country')
+if args.percent:
+    plt.ylabel('Percent of Total')
+else:
+    plt.ylabel('Tweet Volume')
+
+# save the bar graph as a PNG file
+filename = args.key[1:] + ('_lang.png' if args.input_path[-1] == 'g' else '_country.png')
+plt.savefig(filename)
