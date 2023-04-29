@@ -1,1 +1,1 @@
-![Coronavirus Country Plot](#coronavirus_output.png)
+![Coronavirus Country Plot]('#coronavirus_output.png')
