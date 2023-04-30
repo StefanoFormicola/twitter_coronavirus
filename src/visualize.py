@@ -37,10 +37,8 @@ values = [item[1] for item in top_items]
 keys = keys[::-1]
 values = values[::-1]
 
-# plot the bar graph
-plt.barh(keys, values, color='green')
+plt.bar(keys, values, color='blue')
 
-# set the title and axis labels
 if args.input_path[-1] == 'g':
     plt.xlabel('Language')
 else:
@@ -50,6 +48,5 @@ if args.percent:
 else:
     plt.ylabel('Tweet Volume')
 
-# save the bar graph as a PNG file
 filename = args.key[1:] + ('_lang.png' if args.input_path[-1] == 'g' else '_country.png')
 plt.savefig(filename)
