@@ -2,36 +2,36 @@
 
 # command line args
 import argparse
-parser = argparse.ArgumentParser()
-parser.add_argument('--hashtags', nargs='+', required=True)
-args = parser.parse_args()
+inspect = argparse.ArgumentParser()
+inspect.add_argument('--hashtags', nargs='+', required=True)
+arguments = inspect.parse_args()
 
 # imports
 import os
 import json
 import matplotlib
 matplotlib.use('Agg')
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt 
 from collections import defaultdict
 
-data = {hashtag: defaultdict(int) for hashtag in args.hashtags}
+info = {hashtag: defaultdict(int) for hashtag in arguments.hashtags}
 
 for filename in os.listdir('outputs'):
     with open(os.path.join('outputs', filename)) as f:
-        counts = json.load(f)
+        numbs = json.load(f)
         date = filename.split('.')[0]
-        for hashtag in args.hashtags:
-            if hashtag in counts:
-                total_count = sum(counts[hashtag].values())
-                data[hashtag][date] += total_count
+        for hashtag in arguments.hashtags:
+            if hashtag in numbs:
+                total_count = sum(numbs[hashtag].values())
+                info[hashtag][date] += total_count
             else:
                 print(f"Hashtag {hashtag} not in data for {date}")
 
 plt.figure()
 
-for hashtag, counts in data.items():
-    if counts:
-        dates, values = zip(*sorted(counts.items()))
+for hashtag, numbs in info.items():
+    if numbs:
+        dates, values = zip(*sorted(numbs.items()))
         plt.plot(dates, values, label=hashtag)
 
 plt.legend()
