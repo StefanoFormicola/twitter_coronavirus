@@ -30,14 +30,13 @@ items = sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), rev
 for k,v in items:
     print(k,':',v)
 
-# create lists of keys and values for the bar graph
 top_items = items[:10] 
 keys = [item[0] for item in top_items]
 values = [item[1] for item in top_items]
 keys = keys[::-1]
 values = values[::-1]
 
-plt.bar(keys, values, color='blue')
+plt.bar(keys, values, color='green')
 
 if args.input_path[-1] == 'g':
     plt.xlabel('Language')
