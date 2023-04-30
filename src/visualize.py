@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 
-import matplotlib
-matplotlib.use('Agg') # Add this line
-
 # command line args
 import argparse
 parser = argparse.ArgumentParser()
@@ -11,10 +8,13 @@ parser.add_argument('--key',required=True)
 parser.add_argument('--percent',action='store_true')
 args = parser.parse_args()
 
+#imports
 import os
 import json
 from collections import Counter,defaultdict
-import matplotlib.pyplot as plt # Make sure to import plt after setting the backend
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 # open the input path
 with open(args.input_path) as f:
@@ -38,7 +38,7 @@ keys = keys[::-1]
 values = values[::-1]
 
 # plot the bar graph
-plt.barh(keys, values, color='blue')
+plt.barh(keys, values, color='green')
 
 # set the title and axis labels
 if args.input_path[-1] == 'g':
