@@ -30,22 +30,17 @@ items = sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), rev
 for k,v in items:
     print(k,':',v)
 
-top_items = items[:10] 
-keys = [item[0] for item in top_items]
-values = [item[1] for item in top_items]
-keys = keys[::-1]
-values = values[::-1]
+top_data = sorted(counts[args.key].items(), key=lambda x: x[1], reverse=True)[:10]
 
-plt.bar(keys, values, color='green')
+keys, values = zip(*top_data)
 
-if args.input_path[-1] == 'g':
-    plt.xlabel('Language')
-else:
-    plt.xlabel('Country')
-if args.percent:
-    plt.ylabel('Percent of Total')
-else:
-    plt.ylabel('Tweet Volume')
+plt.bar(keys, values, color='springgreen')
 
-filename = args.key[1:] + ('_lang.png' if args.input_path[-1] == 'g' else '_country.png')
+label_x = 'Language' if args.input_path.endswith('g') else 'Country'
+label_y = 'Percent of Total' if args.percent else 'Tweet Volume'
+plt.xlabel(label_x)
+plt.ylabel(label_y)
+
+filename = f"{args.key[1:]}_{label_x.lower()}.png"
+
 plt.savefig(filename)
